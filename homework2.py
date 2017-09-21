@@ -122,7 +122,7 @@ def main():
 	print("本次测试共{}题，满分100分".format(num))
 	for i in range(1,num+1):
 		equation = Equation()
-		print("-----------------------------")
+		print("----------------------------")
 		print("第{}题: {}".format(i,equation.equ),end = '')
 		ans = input().strip()
 		if ans == str(equation.answer):
@@ -130,7 +130,7 @@ def main():
 			print("回答正确！：）")
 		else:
 			print("回答错误。：（ 正确答案：{}".format(equation.answer))
-	print("-----------------------------")
+	print("----------------------------")
 	print("测试结束，本次测试得分：{}分".format(round(float(score)/float(num)*100)))
 
 if __name__ == '__main__':
