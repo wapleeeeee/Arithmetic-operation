@@ -100,7 +100,6 @@ class Equation():
 					tmpStack.append(self.divide(number_x,number_y))
 		return tmpStack[0]
 
-
 	#四则运算
 	def plus(self,num1,num2):
 		return num1+num2
