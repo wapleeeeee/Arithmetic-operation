@@ -7,39 +7,39 @@ from fractions import Fraction
 
 class Equation():
 	def __init__(self):
-		self.op = ["+","-","*","¡Â","/"]
-		self.priority = {'+':1,'-':1,'*':2,'¡Â':2}
+		self.op = ["+","-","*","Ã·","/"]
+		self.priority = {'+':1,'-':1,'*':2,'Ã·':2}
 		self.equ = self.getEquation()
 		self.answer = self.getAnswer()
 
-	#Éú³ÉËæ»úµÈÊ½
+	#ç”Ÿæˆéšæœºç­‰å¼
 	def getEquation(self):
 		number = random.randint(2,9)
 		tmpstring = ""
 		tmpop = ''
 		tmpint = 0
 		for i in range(number):
-			if tmpop == '/':            #·ÖÊıÇé¿ö
+			if tmpop == '/':            #åˆ†æ•°æƒ…å†µ
 				tmpint = random.randint(tmpint+1,9)
 				tmpop = random.choice(self.op[:-1])
-			elif tmpop == '¡Â':          #³ıºÅÇé¿ö
+			elif tmpop == 'Ã·':          #é™¤å·æƒ…å†µ
 				tmpint = random.randint(1,8)
 				tmpop = random.choice(self.op)
 			else:
 				tmpint = random.randint(0,8)
 				tmpop = random.choice(self.op)
-			#Ìí¼Óµ½ËãÊ½ÖĞ
+			#æ·»åŠ åˆ°ç®—å¼ä¸­
 			tmpstring += str(tmpint)
 			tmpstring += tmpop
 		tmpstring = list(tmpstring)
-		#ĞŞ¸Ä×îºóÒ»¸ö·ûºÅÎª=
+		#ä¿®æ”¹æœ€åä¸€ä¸ªç¬¦å·ä¸º=
 		tmpstring[-1] = '='
 		tmpstring = ''.join(tmpstring)
 		return tmpstring
 
-	#ÇóËãÊ½´ğ°¸
+	#æ±‚ç®—å¼ç­”æ¡ˆ
 	def getAnswer(self):
-		#½«´øÓĞ·ÖºÅµÄ±í´ïÊ½»¯³É´ø·ÖÊıµÄlist
+		#å°†å¸¦æœ‰åˆ†å·çš„è¡¨è¾¾å¼åŒ–æˆå¸¦åˆ†æ•°çš„list
 		equlist = []
 		i = 0
 		while(i < len(self.equ)-1):
@@ -50,12 +50,12 @@ class Equation():
 				equlist.append(Fraction(int(self.equ[i]),int(self.equ[i+2])))
 				i += 3
 
-		#½«ÖĞ×º±í´ïÊ½×ª»¯Îªºó×º
+		#å°†ä¸­ç¼€è¡¨è¾¾å¼è½¬åŒ–ä¸ºåç¼€
 		new_equlist = self.change_list(equlist)
-		#¼ÆËãºó×º±í´ïÊ½µÄ½á¹û
+		#è®¡ç®—åç¼€è¡¨è¾¾å¼çš„ç»“æœ
 		return(self.calculate(new_equlist))
 
-	#×ª»¯Îªºó×º±í´ïÊ½
+	#è½¬åŒ–ä¸ºåç¼€è¡¨è¾¾å¼
 	def change_list(self,equation):
 		tmplist = []
 		stack = []
@@ -73,7 +73,7 @@ class Equation():
 					if tmpTopStack != '(':
 						tmplist.append(tmpTopStack)
 			else:
-				while(len(stack) > 0 and self.priority[stack[-1]] >= self.priority[op]): #Õ»¶¥ÓÅÏÈ¼¶´óÓÚµÈÓÚ¸Ã·ûºÅ£¬³ÖĞø³öÕ»
+				while(len(stack) > 0 and self.priority[stack[-1]] >= self.priority[op]): #æ ˆé¡¶ä¼˜å…ˆçº§å¤§äºç­‰äºè¯¥ç¬¦å·ï¼ŒæŒç»­å‡ºæ ˆ
 					tmplist.append(stack.pop())
 				stack.append(op)
 		while(len(stack) != 0):
@@ -81,7 +81,7 @@ class Equation():
 		return tmplist 	
 
 
-	#¼ÆËãºó×º±í´ïÊ½µÄ½á¹û
+	#è®¡ç®—åç¼€è¡¨è¾¾å¼çš„ç»“æœ
 	def calculate(self,_list):
 		tmpStack = []
 		for tmpValue in _list:
@@ -100,7 +100,7 @@ class Equation():
 					tmpStack.append(self.divide(number_x,number_y))
 		return tmpStack[0]
 
-	#ËÄÔòÔËËã
+	#å››åˆ™è¿ç®—
 	def plus(self,num1,num2):
 		return num1+num2
 
@@ -119,19 +119,19 @@ def main():
 		raise IOError("Please enter the right command!")
 	num = int(sys.argv[2])
 	score = 0
-	print("±¾´Î²âÊÔ¹²{}Ìâ£¬Âú·Ö100·Ö".format(num))
+	print("æœ¬æ¬¡æµ‹è¯•å…±{}é¢˜ï¼Œæ»¡åˆ†100åˆ†".format(num))
 	for i in range(1,num+1):
 		equation = Equation()
 		print("-----------------------------")
-		print("µÚ{}Ìâ: {}".format(i,equation.equ),end = '')
+		print("ç¬¬{}é¢˜: {}".format(i,equation.equ),end = '')
 		ans = input().strip()
 		if ans == str(equation.answer):
 			score += 1
-			print("»Ø´ğÕıÈ·£¡£º£©")
+			print("å›ç­”æ­£ç¡®ï¼ï¼šï¼‰")
 		else:
-			print("»Ø´ğ´íÎó¡££º£¨ ÕıÈ·´ğ°¸£º{}".format(equation.answer))
+			print("å›ç­”é”™è¯¯ã€‚ï¼šï¼ˆ æ­£ç¡®ç­”æ¡ˆï¼š{}".format(equation.answer))
 	print("-----------------------------")
-	print("²âÊÔ½áÊø£¬±¾´Î²âÊÔµÃ·Ö£º{}·Ö".format(round(float(score)/float(num)*100)))
+	print("æµ‹è¯•ç»“æŸï¼Œæœ¬æ¬¡æµ‹è¯•å¾—åˆ†ï¼š{}åˆ†".format(round(float(score)/float(num)*100)))
 
 if __name__ == '__main__':
 	main()
