@@ -1,3 +1,5 @@
+#environment: Python 3.6.0 |Anaconda custom (x86_64)|
+
 import sys
 import random
 
