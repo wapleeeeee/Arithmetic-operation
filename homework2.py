@@ -9,8 +9,8 @@ class Equation():
 	def __init__(self):
 		self.op = ["+","-","*","÷","/"]
 		self.priority = {'+':1,'-':1,'*':2,'÷':2}
-		self.equ = self.getEquation()
-		self.answer = self.getAnswer()
+		self.equ = ''
+		self.answer = 0
 
 	#生成随机等式
 	def getEquation(self):
@@ -77,16 +77,16 @@ class Equation():
 
 
 	#求算式答案
-	def getAnswer(self):
+	def getAnswer(self,exp):
 		#将带有分号的表达式化成带分数的list
 		equlist = []
 		i = 0
-		while(i < len(self.equ)-1):
-			if self.equ[i+1] != '/':
-				equlist.append(self.equ[i])
+		while(i < len(exp)-1):
+			if exp[i+1] != '/':
+				equlist.append(exp[i])
 				i += 1
 			else:
-				equlist.append(Fraction(int(self.equ[i]),int(self.equ[i+2])))
+				equlist.append(Fraction(int(exp[i]),int(exp[i+2])))
 				i += 3
 
 		#将中缀表达式转化为后缀
@@ -152,6 +152,10 @@ class Equation():
 	def divide(self,num1,num2):
 		return Fraction(num1,num2)
 
+	#开始生成表达式及计算结果
+	def start(self):
+		self.equ = self.getEquation()
+		self.answer = self.getAnswer(self.equ)
 
 def main():
 	if sys.argv[1] != "-n":
@@ -161,6 +165,7 @@ def main():
 	print("本次测试共{}题，满分100分".format(num))
 	for i in range(1,num+1):
 		equation = Equation()
+		equation.start()
 		print("-----------------------------")
 		print("第{}题: {}".format(i,equation.equ),end = '')
 		ans = input().strip()
