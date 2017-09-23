@@ -62,17 +62,17 @@ class Equation():
 			judgeright = st[2*right+1] if len(st)>2*right+1 else ''
 			if (not '+' in judgeString and not '-' in judgeString) or '/' == judgeleft or '/' == judgeright:
 				continue
+			if (left in left_list and right in right_list) or left in right_list or right in left_list:
+				continue
 			left_list.append(left)
 			right_list.append(right)
 		left_list.sort()
 		right_list.sort()
-		print(left_list,right_list)
 		#插入括号
 		for i in range(len(left_list)):
 			tmplist.insert(2*left_list[i]+i,'(')
 		for j in range(len(right_list)):
 			tmplist.insert(2*right_list[j]+j+len(left_list)+1,')')
-		print(''.join(tmplist))
 		return ''.join(tmplist)
 
 
@@ -90,7 +90,6 @@ class Equation():
 				i += 3
 
 		#将中缀表达式转化为后缀
-		print(equlist)
 		new_equlist = self.change_list(equlist)
 		#计算后缀表达式的结果
 		return(self.calculate(new_equlist))
@@ -104,19 +103,18 @@ class Equation():
 				tmplist.append(int(op))
 			elif type(op) != str:
 				tmplist.append(op)
-			elif len(stack) == 0 or op == '(' or stack[-1] == '(':
-				stack.append(op)
 			elif op == ')':
 				tmpTopStack = ''
 				while tmpTopStack != '(':
 					tmpTopStack = stack.pop()
 					if tmpTopStack != '(':
 						tmplist.append(tmpTopStack)
+			elif len(stack) == 0 or op == '(' or stack[-1] == '(':
+				stack.append(op)
 			else:
 				while(len(stack) > 0 and stack[-1] != '(' and self.priority[stack[-1]] >= self.priority[op]): #栈顶优先级大于等于该符号，持续出栈
 					tmplist.append(stack.pop())
 				stack.append(op)
-			print(stack,tmplist)
 		while(len(stack) != 0):
 			tmplist.append(stack.pop())
 		return tmplist 	
