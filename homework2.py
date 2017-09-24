@@ -1,7 +1,8 @@
 #environment: Python 3.6.0 |Anaconda custom (x86_64)|
 
 import sys
-import random
+from random import randint
+from random import choice
 
 from fractions import Fraction
 
@@ -15,20 +16,20 @@ class Equation():
 	#生成随机等式
 	@profile
 	def getEquation(self):
-		number = random.randint(2,9)
+		number = randint(2,9)
 		tmpstring = ""
 		tmpop = ''
 		tmpint = 0
 		for i in range(number):
 			if tmpop == '/':            #分数情况
-				tmpint = random.randint(tmpint+1,9)
-				tmpop = random.choice(self.op[:-1])
+				tmpint = randint(tmpint+1,9)
+				tmpop = choice(self.op[:-1])
 			elif tmpop == '÷':          #除号情况
-				tmpint = random.randint(1,8)
-				tmpop = random.choice(self.op)
+				tmpint = randint(1,8)
+				tmpop = choice(self.op)
 			else:
-				tmpint = random.randint(0,8)
-				tmpop = random.choice(self.op)
+				tmpint = randint(0,8)
+				tmpop = choice(self.op)
 			#添加到算式中
 			tmpstring += str(tmpint)
 			tmpstring += tmpop
@@ -50,14 +51,14 @@ class Equation():
 		tmplist = list(st)
 		#括号数量控制在[0,2]
 		if length > 4:
-			bracketNum = random.randint(0,2)
+			bracketNum = randint(0,2)
 		elif length > 2:
-			bracketNum = random.randint(0,1)
+			bracketNum = randint(0,1)
 		else:
 			bracketNum = 0
 		for branum in range(bracketNum):
-			left = random.randint(0,length-2)
-			right = random.randint(left+1,length-1)
+			left = randint(0,length-2)
+			right = randint(left+1,length-1)
 			#判断括号无意义情况
 			judgeString = st[2*left:2*right]
 			judgeleft = st[2*left-1]
@@ -137,13 +138,14 @@ class Equation():
 				number_y = tmpStack.pop()
 				number_x = tmpStack.pop()
 				if tmpValue == "+":
-					tmpStack.append(self.plus(number_x,number_y))
+					tmp = number_x+number_y
 				elif tmpValue == "-":
-					tmpStack.append(self.minus(number_x,number_y))
+					tmp = number_x-number_y
 				elif tmpValue == "*":
-					tmpStack.append(self.multiply(number_x,number_y))
+					tmp = number_x*number_y
 				else:
-					tmpStack.append(self.divide(number_x,number_y))
+					tmp = Fraction(number_x,number_y)
+				tmpStack.append(tmp)
 		return tmpStack[0]
 
 	#四则运算
@@ -190,7 +192,7 @@ def performance_main():
 	for i in range(test_num):
 		equation = Equation()
 		equation.start()
-		print("{}{}".format(equation.equ,equation.answer))
+		#print("{}{}".format(equation.equ,equation.answer))
 
 if __name__ == '__main__':
 	performance_main()
