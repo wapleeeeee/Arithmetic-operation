@@ -14,7 +14,7 @@ class Equation():
 		self.answer = 0
 
 	#生成随机等式
-	@profile
+	#@profile
 	def getEquation(self):
 		number = randint(2,9)
 		tmpstring = ""
@@ -44,7 +44,7 @@ class Equation():
 		return finalstring
 
 	#加括号
-	@profile
+	#@profile
 	def insertBracket(self,st,length):
 		left_list = []
 		right_list = []
@@ -83,7 +83,7 @@ class Equation():
 
 
 	#求算式答案
-	@profile
+	#@profile
 	def getAnswer(self,exp):
 		#将带有分号的表达式化成带分数的list
 		equlist = []
@@ -101,7 +101,7 @@ class Equation():
 		return(self.calculate(new_equlist))
 
 	#转化为后缀表达式
-	@profile
+	#@profile
 	def change_list(self,equation):
 		tmplist = []
 		stack = []
@@ -128,7 +128,7 @@ class Equation():
 
 
 	#计算后缀表达式的结果
-	@profile
+	#@profile
 	def calculate(self,_list):
 		tmpStack = []
 		for tmpValue in _list:
@@ -195,4 +195,4 @@ def performance_main():
 		#print("{}{}".format(equation.equ,equation.answer))
 
 if __name__ == '__main__':
-	performance_main()
+	main()
