@@ -13,6 +13,7 @@ class Equation():
 		self.answer = 0
 
 	#生成随机等式
+	@profile
 	def getEquation(self):
 		number = random.randint(2,9)
 		tmpstring = ""
@@ -42,6 +43,7 @@ class Equation():
 		return finalstring
 
 	#加括号
+	@profile
 	def insertBracket(self,st,length):
 		left_list = []
 		right_list = []
@@ -62,7 +64,7 @@ class Equation():
 			judgeright = st[2*right+1] if len(st)>2*right+1 else ''
 			if (not '+' in judgeString and not '-' in judgeString) or '/' == judgeleft or '/' == judgeright:
 				continue
-			if (left in left_list and right in right_list) or left in right_list or right in left_list:
+			if (left in left_list and right in right_list) or left in right_list or right in left_list or st[left*2-1] == '÷':
 				continue
 			left_list.append(left)
 			right_list.append(right)
@@ -72,11 +74,15 @@ class Equation():
 		for i in range(len(left_list)):
 			tmplist.insert(2*left_list[i]+i,'(')
 		for j in range(len(right_list)):
-			tmplist.insert(2*right_list[j]+j+len(left_list)+1,')')
+			if right_list[j] < left_list[-1]:
+				tmplist.insert(2*right_list[j]+j+len(left_list),')')
+			else:
+				tmplist.insert(2*right_list[j]+j+len(left_list)+1,')')
 		return ''.join(tmplist)
 
 
 	#求算式答案
+	@profile
 	def getAnswer(self,exp):
 		#将带有分号的表达式化成带分数的list
 		equlist = []
@@ -88,13 +94,13 @@ class Equation():
 			else:
 				equlist.append(Fraction(int(exp[i]),int(exp[i+2])))
 				i += 3
-
 		#将中缀表达式转化为后缀
 		new_equlist = self.change_list(equlist)
 		#计算后缀表达式的结果
 		return(self.calculate(new_equlist))
 
 	#转化为后缀表达式
+	@profile
 	def change_list(self,equation):
 		tmplist = []
 		stack = []
@@ -121,6 +127,7 @@ class Equation():
 
 
 	#计算后缀表达式的结果
+	@profile
 	def calculate(self,_list):
 		tmpStack = []
 		for tmpValue in _list:
@@ -177,5 +184,13 @@ def main():
 	print("-----------------------------")
 	print("测试结束，本次测试得分：{}分".format(round(float(score)/float(num)*100)))
 
+#效能测试
+def performance_main():
+	test_num = 100000
+	for i in range(test_num):
+		equation = Equation()
+		equation.start()
+		print("{}{}".format(equation.equ,equation.answer))
+
 if __name__ == '__main__':
-	main()
+	performance_main()
