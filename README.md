@@ -10,3 +10,5 @@ A homework project which randomly creates several arithmetic operations and chec
 ### 附加功能:
 - √ 支持带括号的多元复合运算
 - √ 运算符个数随机生成（考虑小学生运算复杂度，范围在2~10）
+***
+博客地址：http://www.cnblogs.com/waple/p/7588652.html
