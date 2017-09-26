@@ -54,6 +54,7 @@ class EquationTestCase(TestCase):
 		self.assertEqual(self.equation.calculate([4, 7, 1, '+', Fraction(8, 9), '+', '*', 5, 6, '÷', '-']),Fraction(625,18))
 		self.assertEqual(self.equation.calculate([2, 1, '÷', 8, '÷', 8, '*', Fraction(1, 2), '÷', Fraction(5, 8), '÷']),Fraction(32,5))
 
+
 #测试  
 if __name__ == "__main__":  
     #构造测试集              
