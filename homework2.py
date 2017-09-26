@@ -126,7 +126,6 @@ class Equation():
 			tmplist.append(stack.pop())
 		return tmplist 	
 
-
 	#计算后缀表达式的结果
 	#@profile
 	def calculate(self,_list):
